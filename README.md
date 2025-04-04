@@ -4,7 +4,7 @@ A Woocommerce API Golang Wrapper for the [Woocommerce Rest API (v3)](https://woo
 # Install
 
 ```console
-$ go get github.com/dinistavares/go-woocommerce-api
+$ go get github.com/diogenes-moreira/go-woocommerce-api
 ```
 
 # Usage
@@ -13,7 +13,7 @@ Create a new API client and authenticate with your REST API keys. You should spe
 
 ```go
 import (
-  "github.com/dinistavares/go-woocommerce-api"
+  "github.com/diogenes-moreira/go-woocommerce-api"
 )
 
 func main(){
@@ -35,6 +35,7 @@ func main(){
 ```
 
 The API routes are broken down into services, the supported services are: 
+* Categories `(Create, Get, List, Update, Delete, Batch)`
 * Coupons `(Create, Get, List, Update, Delete, Batch)`
 * Customers `(Create, Get, List, Update, Delete, Batch, GetDownloads)`
 * Orders `(Create, Get, List, Update, Delete, Batch)`
