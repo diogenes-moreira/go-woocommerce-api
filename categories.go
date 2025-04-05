@@ -62,11 +62,11 @@ func (service *CategoriesService) List(opts *ListCategoriesParams) (*[]Category,
 	return categories, response, nil
 }
 
-func (service *CategoriesService) Update(categoryID string, category *Category) (*Category, *http.Response, error) {
+func (service *CategoriesService) Update(categoryID string, category *ProductCategory) (*ProductCategory, *http.Response, error) {
 	url := "/products/categories/" + categoryID
 	req, _ := service.client.NewRequest("PUT", url, nil, category)
 
-	updatedCategory := new(Category)
+	updatedCategory := new(ProductCategory)
 	response, err := service.client.Do(req, updatedCategory)
 
 	if err != nil {
@@ -84,7 +84,7 @@ func (service *CategoriesService) Delete(categoryID string, param *DeleteCategor
 	url := "/products/categories/" + categoryID
 	req, _ := service.client.NewRequest("DELETE", url, param, nil)
 
-	category := new(Category)
+	category := new(ProductCategory)
 	response, err := service.client.Do(req, category)
 
 	if err != nil {
@@ -94,11 +94,11 @@ func (service *CategoriesService) Delete(categoryID string, param *DeleteCategor
 	return response, nil
 }
 
-func (service *CategoriesService) Create(category *Category) (*Category, *http.Response, error) {
+func (service *CategoriesService) Create(category *ProductCategory) (*ProductCategory, *http.Response, error) {
 	url := "/products/categories"
 	req, _ := service.client.NewRequest("POST", url, nil, category)
 
-	createdCategory := new(Category)
+	createdCategory := new(ProductCategory)
 	response, err := service.client.Do(req, createdCategory)
 
 	if err != nil {
@@ -110,15 +110,15 @@ func (service *CategoriesService) Create(category *Category) (*Category, *http.R
 }
 
 type BatchCategoryUpdate struct {
-	Create *[]Category `json:"create,omitempty"`
-	Update *[]Category `json:"update,omitempty"`
-	Delete *[]int      `json:"delete,omitempty"`
+	Create *[]ProductCategory `json:"create,omitempty"`
+	Update *[]ProductCategory `json:"update,omitempty"`
+	Delete *[]int             `json:"delete,omitempty"`
 }
 
 type BatchCategoryUpdateResponse struct {
-	Create *[]Category `json:"create,omitempty"`
-	Update *[]Category `json:"update,omitempty"`
-	Delete *[]Category `json:"delete,omitempty"`
+	Create *[]ProductCategory `json:"create,omitempty"`
+	Update *[]ProductCategory `json:"update,omitempty"`
+	Delete *[]ProductCategory `json:"delete,omitempty"`
 }
 
 func (service *CategoriesService) Batch(opts *BatchCategoryUpdate) (*BatchCategoryUpdateResponse, *http.Response, error) {
