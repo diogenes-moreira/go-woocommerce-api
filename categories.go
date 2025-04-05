@@ -4,6 +4,8 @@ import "net/http"
 
 type CategoriesService service
 
+const basePath = "/products/categories/"
+
 type Category struct {
 	Id          int    `json:"id"`
 	Name        string `json:"name"`
@@ -17,8 +19,8 @@ type Category struct {
 	Links       Links  `json:"_links"`
 }
 
-func (service *CategoriesService) Get(couponID string) (*Category, *http.Response, error) {
-	url := "/products/categories/" + couponID
+func (service *CategoriesService) Get(categoryId string) (*Category, *http.Response, error) {
+	url := basePath + categoryId
 	req, _ := service.client.NewRequest("GET", url, nil, nil)
 
 	category := new(Category)
@@ -49,8 +51,8 @@ type ListCategoriesParams struct {
 }
 
 func (service *CategoriesService) List(opts *ListCategoriesParams) (*[]Category, *http.Response, error) {
-	url := "/products/categories"
-	req, _ := service.client.NewRequest("GET", url, opts, nil)
+
+	req, _ := service.client.NewRequest("GET", basePath, opts, nil)
 
 	categories := new([]Category)
 	response, err := service.client.Do(req, categories)
@@ -62,11 +64,11 @@ func (service *CategoriesService) List(opts *ListCategoriesParams) (*[]Category,
 	return categories, response, nil
 }
 
-func (service *CategoriesService) Update(categoryID string, category *ProductCategory) (*ProductCategory, *http.Response, error) {
-	url := "/products/categories/" + categoryID
+func (service *CategoriesService) Update(categoryID string, category *Category) (*Category, *http.Response, error) {
+	url := basePath + categoryID
 	req, _ := service.client.NewRequest("PUT", url, nil, category)
 
-	updatedCategory := new(ProductCategory)
+	updatedCategory := new(Category)
 	response, err := service.client.Do(req, updatedCategory)
 
 	if err != nil {
@@ -81,10 +83,10 @@ type DeleteCategoryParams struct {
 }
 
 func (service *CategoriesService) Delete(categoryID string, param *DeleteCategoryParams) (*http.Response, error) {
-	url := "/products/categories/" + categoryID
+	url := basePath + categoryID
 	req, _ := service.client.NewRequest("DELETE", url, param, nil)
 
-	category := new(ProductCategory)
+	category := new(Category)
 	response, err := service.client.Do(req, category)
 
 	if err != nil {
@@ -94,11 +96,10 @@ func (service *CategoriesService) Delete(categoryID string, param *DeleteCategor
 	return response, nil
 }
 
-func (service *CategoriesService) Create(category *ProductCategory) (*ProductCategory, *http.Response, error) {
-	url := "/products/categories"
-	req, _ := service.client.NewRequest("POST", url, nil, category)
+func (service *CategoriesService) Create(category *Category) (*Category, *http.Response, error) {
+	req, _ := service.client.NewRequest("POST", basePath, nil, category)
 
-	createdCategory := new(ProductCategory)
+	createdCategory := new(Category)
 	response, err := service.client.Do(req, createdCategory)
 
 	if err != nil {
@@ -110,19 +111,19 @@ func (service *CategoriesService) Create(category *ProductCategory) (*ProductCat
 }
 
 type BatchCategoryUpdate struct {
-	Create *[]ProductCategory `json:"create,omitempty"`
-	Update *[]ProductCategory `json:"update,omitempty"`
-	Delete *[]int             `json:"delete,omitempty"`
+	Create *[]Category `json:"create,omitempty"`
+	Update *[]Category `json:"update,omitempty"`
+	Delete *[]int      `json:"delete,omitempty"`
 }
 
 type BatchCategoryUpdateResponse struct {
-	Create *[]ProductCategory `json:"create,omitempty"`
-	Update *[]ProductCategory `json:"update,omitempty"`
-	Delete *[]ProductCategory `json:"delete,omitempty"`
+	Create *[]Category `json:"create,omitempty"`
+	Update *[]Category `json:"update,omitempty"`
+	Delete *[]Category `json:"delete,omitempty"`
 }
 
 func (service *CategoriesService) Batch(opts *BatchCategoryUpdate) (*BatchCategoryUpdateResponse, *http.Response, error) {
-	url := "/products/categories/batch"
+	url := basePath + "/batch"
 	req, _ := service.client.NewRequest("POST", url, nil, opts)
 
 	batchCategory := new(BatchCategoryUpdateResponse)
