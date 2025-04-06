@@ -79,7 +79,7 @@ func (service *CategoriesService) Update(categoryID string, category *Category) 
 }
 
 type DeleteCategoryParams struct {
-	Force string `json:"force,omitempty"`
+	Force string `url:"force,omitempty"`
 }
 
 func (service *CategoriesService) Delete(categoryID string, param *DeleteCategoryParams) (*http.Response, error) {
